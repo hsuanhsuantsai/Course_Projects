@@ -1,0 +1,43 @@
+20170130
+Flora Tsai
+
+If you have any question concerning the codes, feel free to let me know.
+
+
+1. Enter "make" in the command line and ocr is the default target for Makefile
+
+2. This program can be run on dataset/image library with the same format as MNIST dataset/image library. (Naming format must be exactly the same!)
+
+3. How to run the program:
+	./ocr [train-name] [train-size] [test-name] [k] [distance-scheme]
+
+	For example,
+	With train-images-idx3-ubyte and train-labels-idx1-ubyte as training dataset, t10k-images-idx3-ubyte, t10k-labels-idx1-ubyte as test dataset in the same directory
+
+	./ocr train 15000 t10k 5 euclid
+
+4. For input options:
+	-If train-size is 0, the program will use all images from the training dataset.
+	-If "all" is specified for train-size, the program will use 25%, 50%, 75%, 100% of images in the training dataset.
+	-If "all" is specified for k, the program will set k to 1, 5, 10, 15 and 20.
+	-If "all" is specified for distance-scheme, the program will be run with every implemented distance function.
+
+5. Output format
+	-Every second:
+	[distance scheme] images processed/total training images (ratio) numbers of correct classification/images processed (ratio)
+	-Final output:
+	#distance   k       train-size
+	scheme-name k-value accuracy
+
+6. design choices
+	-Make a function call LIST(&s) from distance file, which can return a string of all schemes available and the number of valid schemes.
+	 I separate each scheme by a blank, which can be detected by a parser-like manner.
+	 In this case, if we have return string with blanks separating each scheme, we can build a scheme_list with known s.
+	-Hardcode all_train_size and all_k because they are the requirement of the assignment and are not flexible.
+	-We want to analyze the performance of different scheme under THE SAME subset, so I choose to build them up at first. I put train_size selection in the inner part of for loops.
+	-I wanted to reduce the redundency of my code and tried to build up a selection function and a print out function. However, after considering code readability I decide to list all the cases, which is an easier way to read the code.
+	-I want to use one dimension array to store knn results.(trying to reduce complexity of my code) Thus, I have to put my all_train_size selection in the innermost loop. Because we want to have the output format like this:
+	 # distance k 15000 30000
+     euclid 1 50.34 60.33
+     euclid 5 53.34 79.22
+	
