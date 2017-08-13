@@ -1,0 +1,10 @@
+##
+# Specify in this order (one parameter per line):
+# host, user, password, database, port
+##
+
+<database_hostname>
+<db_username>
+<db_password>
+<database_name>
+<connection_port>

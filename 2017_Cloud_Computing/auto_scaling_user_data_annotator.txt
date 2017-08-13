@@ -1,0 +1,16 @@
+#!/bin/bash -ex
+
+# Navigate to the destination
+cd /home/ubuntu
+
+# Get auto scaling files
+aws s3 cp s3://<path>/gas_annotator.zip .
+unzip gas_annotator.zip
+rm gas_annotator.zip
+
+# Change ownership from root
+chown -R ubuntu:ubuntu /home/ubuntu/gas_annotator
+
+# Run the annotator
+cd gas_annotator
+sudo -u ubuntu python jobs_runner.py &
