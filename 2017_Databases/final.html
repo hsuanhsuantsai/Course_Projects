@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>Welcome to Small Café</title>
+	</head>
+	<body>
+		<div class="jumbotron text-center">
+			<h1>Small Café Dish Recommendation System</h1>
+			<p>Small Café aims to offer a good experience with great delicacy.
+				<br>We are here to serve!</p>
+		</div>
+		<nav class="navbar navbar-default">
+  			<div class="container-fluid">
+    			<div class="navbar-header">
+      				<a class="navbar-brand" href="#">Small Café</a>
+    			</div>
+    			<ul class="nav navbar-nav">
+      				<li><a href="final/search.php">Search</a></li>
+      				<li><a href="final/order.php">Order</a></li>
+      				<li><a href="final/user.php">Customer</a></li>
+    			</ul>
+  			</div>
+		</nav>
+		<div class="container">
+			<div class="col-md-6">
+				<h4>Try our recommendation system easily</h4>
+				<form id="rec_form" action="final/recommendation.php" method="post">
+					<div class="form-group">
+						<b>Your Budget</b><br>
+						<input type="number" name="budget" min="0"><br>
+					</div>
+					<div class="form-group">
+						<b>Category (Choose at most 3)</b><br>
+						<input type="checkbox" name="cat[]" value="Appetizer">Appetizer<br>
+						<input type="checkbox" name="cat[]" value="Noodles">Noodles<br>
+						<input type="checkbox" name="cat[]" value="Rice">Rice<br>
+						<input type="checkbox" name="cat[]" value="Desert">Dessert<br>
+						<input type="checkbox" name="cat[]" value="Drink">Drink<br>
+					</div>
+					<div class="form-group">
+						<b>Number of people a dish serves</b><br>
+						If you enter n, we will search in range [n-1, n+1]<br>
+						<input type="number" name="ppl" min="1" max="4"><br>
+					</div>
+					<input type="submit" value="Get Recommendation!">
+				</form>
+			</div>
+
+			<div class="col-md-6">
+				<h4>Just create a new order here</h4>
+				<form action="final/order.php" method="post">
+					<div class="form-group">
+						<b>First name</b><br>
+						<input type="text" name="firstName" required><br>
+					</div>
+					<div class="form-group">
+						<b>Last name</b><br>
+						<input type="text" name="lastName" required><br>
+					</div>
+					<div class="form-group">
+						<b>Customer e-signature</b><br>
+						<input type="text" name="esign" required><br>
+					</div>
+					<input type="submit" value="Make an order">
+				</form>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$('input[type="checkbox"]').on('change', function() {
+				if (this.checked && $('input[type="checkbox"]:checked').length > 3) {
+					this.checked = false;
+				}
+			});
+			$('#rec_form').on('submit', function(event) {
+				if ($('input[type="checkbox"]:checked').length === 0) {
+					event.preventDefault();
+					alert("Please select at least one category!");
+				}
+			})
+		</script>
+	</body>
+</html>
